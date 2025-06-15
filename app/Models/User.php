@@ -18,9 +18,14 @@ class User extends Authenticatable
      * @var list<string>
      */
     protected $fillable = [
+        'id',
         'name',
         'email',
         'password',
+        'contact',
+        'bio',
+        'avatar',
+
     ];
 
     /**
@@ -45,4 +50,17 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+   public function sentRequests(): HasMany
+    {
+        return $this->hasMany(FriendRequest::class, 'sender_id');
+    }
+
+    // Received friend requests
+    public function receivedRequests(): HasMany
+    {
+        return $this->hasMany(FriendRequest::class, 'receiver_id');
+    }
+
+
 }
